@@ -1,0 +1,47 @@
+{
+  "title": "The Catalog Service Incident",
+  "description": "Investigate and resolve a Kubernetes application connectivity incident.",
+  "details": {
+    "intro": {
+      "title": "Preparing the incident environment",
+      "text": "intro/text.md",
+      "background": "intro/background.sh",
+      "foreground": "intro/foreground.sh"
+    },
+    "steps": [
+      {
+        "title": "Restore application connectivity",
+        "text": "step/text.md",
+        "verify": "step/verify.sh"
+      }
+    ],
+    "finish": {
+      "title": "Diagnosis and solution",
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        {
+          "file": "scenario.yaml",
+          "target": "/tmp/catalog-setup/"
+        },
+        {
+          "file": "kind-config.yaml",
+          "target": "/tmp/catalog-setup/"
+        },
+        {
+          "file": "calico-installation.yaml",
+          "target": "/tmp/catalog-setup/"
+        },
+        {
+          "file": "wait-for-catalog-incident",
+          "target": "/usr/local/bin/",
+          "chmod": "+x"
+        }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu-4GB"
+  }
+}

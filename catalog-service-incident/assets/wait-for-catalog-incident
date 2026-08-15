@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -u
+
+readonly ready_file="/tmp/.catalog-incident-ready"
+readonly failed_file="/tmp/.catalog-incident-failed"
+readonly error_file="/tmp/.catalog-incident-error"
+
+echo "Waiting for the Kubernetes challenge to become ready..."
+
+for _ in $(seq 1 600); do
+  if [[ -f "$ready_file" ]]; then
+    echo "Incident environment ready. Begin your investigation."
+    exit 0
+  fi
+
+  if [[ -f "$failed_file" ]]; then
+    echo "Challenge setup failed. Open Creator Debug for the background log." >&2
+    if [[ -s "$error_file" ]]; then
+      cat "$error_file" >&2
+    fi
+    exit 1
+  fi
+
+  sleep 1
+done
+
+echo "Challenge setup did not finish within ten minutes." >&2
+exit 1
